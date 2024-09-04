@@ -1,0 +1,42 @@
+# Create solution and projects
+dotnet new sln -n InventoryManagementSaaS
+dotnet new webapi -n InventoryManagement.API
+dotnet new classlib -n InventoryManagement.Core
+dotnet new classlib -n InventoryManagement.Infrastructure
+dotnet new xunit -n InventoryManagement.Tests
+
+# Add projects to solution
+dotnet sln add InventoryManagement.API/InventoryManagement.API.csproj
+dotnet sln add InventoryManagement.Core/InventoryManagement.Core.csproj
+dotnet sln add InventoryManagement.Infrastructure/InventoryManagement.Infrastructure.csproj
+dotnet sln add InventoryManagement.Tests/InventoryManagement.Tests.csproj
+
+# Add project references
+dotnet add InventoryManagement.API/InventoryManagement.API.csproj reference InventoryManagement.Core/InventoryManagement.Core.csproj
+dotnet add InventoryManagement.API/InventoryManagement.API.csproj reference InventoryManagement.Infrastructure/InventoryManagement.Infrastructure.csproj
+dotnet add InventoryManagement.Infrastructure/InventoryManagement.Infrastructure.csproj reference InventoryManagement.Core/InventoryManagement.Core.csproj
+dotnet add InventoryManagement.Tests/InventoryManagement.Tests.csproj reference InventoryManagement.Core/InventoryManagement.Core.csproj
+dotnet add InventoryManagement.Tests/InventoryManagement.Tests.csproj reference InventoryManagement.Infrastructure/InventoryManagement.Infrastructure.csproj
+
+# Add NuGet packages to API project
+cd InventoryManagement.API
+dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Swashbuckle.AspNetCore
+
+# Add NuGet packages to Infrastructure project
+cd ../InventoryManagement.Infrastructure
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Pomelo.EntityFrameworkCore.MySql
+
+# Create necessary directories
+cd ../InventoryManagement.API
+mkdir Controllers DTOs Mapping
+cd ../InventoryManagement.Core
+mkdir Entities Interfaces Services
+cd ../InventoryManagement.Infrastructure
+mkdir Data Migrations Repositories
+
+# Return to solution root
+cd ..
